@@ -10,9 +10,11 @@ import SwiftUI
 import Combine
 
 class CounterViewModel: ObservableObject {
+    let filename: String
     @Published var counters: [Counter] = []
     
-    init() {
+    init(filename: String) {
+        self.filename = filename
         loadData()
     }
     
@@ -40,10 +42,10 @@ class CounterViewModel: ObservableObject {
     }
 
     private func loadData() {
-        counters = DataManager.shared.load()
+        counters = DataManager.shared.load(from: filename)
     }
 
     func saveData() {
-        DataManager.shared.save(counters)
+        DataManager.shared.save(counters, to: filename)
     }
 }

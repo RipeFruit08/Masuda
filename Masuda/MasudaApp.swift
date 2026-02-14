@@ -11,7 +11,9 @@ import SwiftUI
 struct MasudaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            LaunchView()
+//            ContentView("counters.json")
+            JsonListView()
         }
     }
 }
