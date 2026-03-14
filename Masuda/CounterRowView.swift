@@ -22,9 +22,11 @@ struct CounterRowView: View {
             Text(String(format: "%.1f%%", percentage))
                 .frame(width: 60, alignment: .trailing)
             Button(action: {
+                #if os(iOS)
                 let impactMed = UIImpactFeedbackGenerator(style: .medium)
-                onIncrement()
                 impactMed.impactOccurred()
+                #endif
+                onIncrement()
             }) {
                 Text("+1")
                     .padding(.horizontal)

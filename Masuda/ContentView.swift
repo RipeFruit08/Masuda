@@ -95,7 +95,7 @@ struct ContentView: View {
         }
         .navigationTitle("Masuda")
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
+            ToolbarItemGroup(placement: .automatic) {
                 #if os(macOS)
                     Button {
                         if let fileURL = getCountersFileURL(
@@ -117,17 +117,38 @@ struct ContentView: View {
                         Image(systemName: "square.and.arrow.down")
                     }
                 #endif
+                #if os(iOS)
                 Button {
                     isSharing = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                 }
+                #elseif os(macOS)
+                Button {
+                    if let fileURL = getCountersFileURL(for: "counters.json") {
+                        FileExporter.exportCountersFile(from: fileURL)
+                    }
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                #endif
 
+                #if os(iOS)
                 Button {
                     isImporting = true
                 } label: {
                     Image(systemName: "square.and.arrow.down")
                 }
+                #elseif os(macOS)
+                Button {
+                    FileImporter.importCounters { importedCounters in
+                        viewModel.counters = importedCounters
+                        viewModel.saveData()
+                    }
+                } label: {
+                    Image(systemName: "square.and.arrow.down")
+                }
+                #endif
             }
         }
         .sheet(isPresented: $isPresentingAddSheet) {

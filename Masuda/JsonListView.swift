@@ -46,7 +46,7 @@ struct JsonListView: View {
                 files = dataManager.listJSONFiles()
             }
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .automatic) {
                     Button {
                         newFilename = ""
                         isPresentingNewFileSheet = true
